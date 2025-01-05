@@ -6,4 +6,4 @@ command:
   - "--cfgFile"
   - "/sources/cfg_files/sfiii3n/sr6_128x4_das_nc.yaml"
 sources:
-  .: git+@github.com/neallausson/MySecondAgent.git#ref=Master">https://neallausson:{{.Secrets.token}}@github.com/neallausson/MySecondAgent.git#ref=Master
+  .: git+https://neallausson:{{.Secrets.token}}@github.com/neallausson/MySecondAgent.git#ref=Master
