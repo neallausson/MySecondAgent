@@ -31,7 +31,7 @@ def main(cfg_file, trained_model, test=False):
     wrappers_settings.normalize_reward = False
 
     # Create environment
-    env, num_envs = make_sb3_env(settings.game_id, settings, wrappers_settings, no_vec=True)
+    env, num_envs = make_sb3_env(settings.game_id, settings, wrappers_settings, no_vec=True, render_mode="human")
     print("Activated {} environment(s)".format(num_envs))
 
     # Load the trained agent

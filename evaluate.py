@@ -33,7 +33,7 @@ def main(cfg_file):
     wrappers_settings = load_settings_flat_dict(WrappersSettings, params["wrappers_settings"])
 
     # Create environment
-    env, num_envs = make_sb3_env(settings.game_id, settings, wrappers_settings)
+    env, num_envs = make_sb3_env(settings.game_id, settings, wrappers_settings, render_mode="human")
     print("Activated {} environment(s)".format(num_envs))
 
     # Policy param
