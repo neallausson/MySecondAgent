@@ -10,7 +10,7 @@ from diambra.arena.stable_baselines3.make_sb3_env import make_sb3_env, Environme
 import random
 import argparse
 
-def main(cfg_file, trained_model, test=False):
+def main(cfg_file, test=False):
     # Read the cfg file
     yaml_file = open(cfg_file)
     params = yaml.load(yaml_file, Loader=yaml.FullLoader)
@@ -30,12 +30,15 @@ def main(cfg_file, trained_model, test=False):
     wrappers_settings = load_settings_flat_dict(WrappersSettings, params["wrappers_settings"])
     wrappers_settings.normalize_reward = False
 
+    ppo_settings = params["ppo_settings"]
+    model_checkpoint = ppo_settings["model_checkpoint"]
+
     # Create environment
-    env, num_envs = make_sb3_env(settings.game_id, settings, wrappers_settings, no_vec=True, render_mode="human")
+    env, num_envs = make_sb3_env(settings.game_id, settings, wrappers_settings, no_vec=True)
     print("Activated {} environment(s)".format(num_envs))
 
     # Load the trained agent
-    model_path = os.path.join(model_folder, trained_model)
+    model_path = os.path.join(model_folder, model_checkpoint)
     agent = PPO.load(model_path)
 
     # Print policy network architecture
@@ -62,7 +65,6 @@ def main(cfg_file, trained_model, test=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--cfgFile", type=str, required=True, help="Configuration file")
-    parser.add_argument("--trainedModel", type=str, default="model", help="Model checkpoint")
     parser.add_argument("--test", type=int, default=0, help="Test mode")
     opt = parser.parse_args()
     print(opt)
