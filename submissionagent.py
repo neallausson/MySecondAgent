@@ -69,4 +69,4 @@ if __name__ == "__main__":
     opt = parser.parse_args()
     print(opt)
 
-    main(opt.cfgFile, opt.trainedModel, bool(opt.test))
+    main(opt.cfgFile, bool(opt.test))
