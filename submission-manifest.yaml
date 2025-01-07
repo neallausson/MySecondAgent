@@ -6,6 +6,6 @@ command:
   - "--cfgFile"
   - "/sources/cfg_files/sfiii3n/sr6_128x4_das_nc.yaml"
   - "--trainedModel"
-  - "/sources/results/sfiii3n/sr6_128x4_das_nc/model/2000000"
+  - "/sources/results/sfiii3n/sr6_128x4_das_nc/model/2000000.zip"
 sources:
   .: git+https://neallausson:{{.Secrets.token}}@github.com/neallausson/MySecondAgent.git#ref=Master
