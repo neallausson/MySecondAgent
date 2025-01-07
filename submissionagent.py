@@ -62,9 +62,9 @@ def main(cfg_file, trained_model, test=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--cfgFile", type=str, required=True, help="Configuration file")
-    parser.add_argument("--trainedModel", type=str, default="model", help="Model checkpoint")
+    parser.add_argument("--modelFile", type=str, required=True, help="Model file")
     parser.add_argument("--test", type=int, default=0, help="Test mode")
     opt = parser.parse_args()
     print(opt)
 
-    main(opt.cfgFile, opt.trainedModel, bool(opt.test))
+    main(opt.cfgFile, opt.modelFile, bool(opt.test))
