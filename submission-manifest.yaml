@@ -5,7 +5,7 @@ command:
   - "/sources/submissionagent.py"
   - "--cfgFile"
   - "/sources/cfg_files/sfiii3n/sr6_128x4_das_nc.yaml"
-  - "--trainedModel"
-  - "/sources/results/sfiii3n/sr6_128x4_das_nc/model/2000000.zip"
+  - "--modelFile"
+  - "/sources/results/sfiii3n/sr6_128x4_das_nc/model/model.zip"
 sources:
   .: git+https://neallausson:{{.Secrets.token}}@github.com/neallausson/MySecondAgent.git#ref=Master
