@@ -9,17 +9,13 @@ from stable_baselines3 import PPO
 
 # diambra run -s 8 python stable_baselines3/training.py --cfgFile $PWD/stable_baselines3/cfg_files/sfiii3n/sr6_128x4_das_nc.yaml
 
-def main(cfg_file):
+def main(cfg_file, model_file):
     # Read the cfg file
     yaml_file = open(cfg_file)
     params = yaml.load(yaml_file, Loader=yaml.FullLoader)
     print("Config parameters = ", json.dumps(params, sort_keys=True, indent=4))
     yaml_file.close()
 
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    model_folder = os.path.join(base_path, params["folders"]["parent_dir"], params["settings"]["game_id"],
-                                params["folders"]["model_name"], "model")
-    os.makedirs(model_folder, exist_ok=True)
     # Settings
     params["settings"]["action_space"] = SpaceTypes.DISCRETE if params["settings"]["action_space"] == "discrete" else SpaceTypes.MULTI_DISCRETE
     settings = load_settings_flat_dict(EnvironmentSettings, params["settings"])
@@ -27,14 +23,11 @@ def main(cfg_file):
     # Wrappers Settings
     wrappers_settings = load_settings_flat_dict(WrappersSettings, params["wrappers_settings"])
 
-    ppo_settings = params["ppo_settings"]
-    model_checkpoint = ppo_settings["model_checkpoint"]
-
     # Create environment
-    env, num_envs = make_sb3_env(settings.game_id, settings, wrappers_settings, render_mode="human")
+    env, num_envs = make_sb3_env(settings.game_id, settings, wrappers_settings)
     print("Activated {} environment(s)".format(num_envs))
 
-    agent = PPO.load(os.path.join(model_folder, model_checkpoint))
+    agent = PPO.load(model_file)
 
     # Evaluate the agent
     # NOTE: If you use wrappers with your environment that modify rewards,
@@ -69,7 +62,8 @@ def main(cfg_file):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--cfgFile", type=str, required=True, help="Configuration file")
+    parser.add_argument("--modelFile", type=str, required=True, help="Model file")
     opt = parser.parse_args()
     print(opt)
 
-    main(opt.cfgFile)
+    main(opt.cfgFile, opt.modelFile)
