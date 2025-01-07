@@ -35,8 +35,8 @@ def main(cfg_file, trained_model, test=False):
     print("Activated {} environment(s)".format(num_envs))
 
     # Load the trained agent
-    model_path = os.path.join(model_folder, trained_model)
-    agent = PPO.load(model_path)
+    #model_path = os.path.join(model_folder, trained_model)
+    agent = PPO.load(trained_model)
 
     # Print policy network architecture
     print("Policy architecture:")
@@ -45,8 +45,8 @@ def main(cfg_file, trained_model, test=False):
     observation, info = env.reset()
 
     while True:
-        action = agent.predict(observation, deterministic=False)
-        observation, reward, terminated, truncated, info = env.step(action)
+        action, _state = agent.predict(observation, deterministic=False)
+        observation, reward, terminated, truncated, info = env.step(int(action))
 
         if terminated or truncated:
             observation, info = env.reset()
